@@ -65,15 +65,11 @@ namespace Warehouse
         /// <returns>A sorted array of vehicle names.</returns>
         internal string[] GetMostTraveledSince(int maxResults, long timestamp)
         {
-            var vehicles = Vehicles;
-            vehicles
-                .ForEach(vehicle => vehicle.Pings.RemoveAll(ping => ping.Timestamp > timestamp));
-            
-            vehicles.Sort((v1, v2) => (int)(v1.GetTotalDistance() - v2.GetTotalDistance()));
-            
             return Vehicles
-                .GetRange(0, maxResults)
-                .Select(v => v.Name).ToArray();
+                .OrderByDescending(v => v.GetTotalDistance(timestamp))
+                .Take(maxResults)
+                .Select(v => v.Name)
+                .ToArray();
         }
 
         /// <summary>

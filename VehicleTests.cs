@@ -46,6 +46,22 @@ namespace Warehouse
         }
         
         [Test]
+        public void ShouldCalculateDistanceBetweenPointsUnderGivenTime()
+        {
+            var expectedMaxTime = DateTime.Now.Millisecond + 10;
+            var expectedDistance = Math.Round(1.4 + 2.8, 1);
+            var vehicle = new Vehicle("Ada");
+            vehicle.Pings.Add(new Ping(0,0, DateTime.Now.Millisecond));
+            vehicle.Pings.Add(new Ping(1,1, DateTime.Now.Add(new TimeSpan(1)).Millisecond));
+            vehicle.Pings.Add(new Ping(3,3, DateTime.Now.Add(new TimeSpan(2)).Millisecond));
+            vehicle.Pings.Add(new Ping(3,3, DateTime.Now.Add(new TimeSpan(20)).Millisecond));
+
+            var actual = vehicle.GetTotalDistance();
+            
+            Assert.AreEqual(expectedDistance, Math.Round(actual, 1));
+        }
+        
+        [Test]
         public void ShouldCalculateDistanceForAMachineWithZeroPings()
         {
             var vehicle = new Vehicle("Ada");
