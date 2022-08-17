@@ -17,7 +17,7 @@ namespace Warehouse
             server.Vehicles.Add(ada);
             server.Vehicles.Add(euler);
 
-            var actual = server.GetMostTraveledSince(1, 10);
+            var actual = server.GetMostTraveledSince(1, 0);
             
             Assert.AreEqual(1, actual.Length);
         }
@@ -37,11 +37,11 @@ namespace Warehouse
         }
         
         [Test]
-        public void ShouldNotReturnDistancesIncludingTimeStamp()
+        public void ShouldReturnDistancesIncludingTimeStamp()
         {
             var server = new WarehouseServer();
             var ada = new Vehicle("Ada");
-            ada.Pings.Add(new Ping(0,0, 1));
+            ada.Pings.Add(new Ping(0,0, 10));
             ada.Pings.Add(new Ping(2,2, 10));
             var euler = new Vehicle("Euler");
             euler.Pings.Add(new Ping(0,0, 2));
@@ -56,12 +56,12 @@ namespace Warehouse
         }
         
         [Test]
-        public void ShouldNotReturnDistancesPastTimeStamp()
+        public void ShouldNotReturnDistancesBeforeTimeStamp()
         {
             var server = new WarehouseServer();
             var ada = new Vehicle("Ada");
-            ada.Pings.Add(new Ping(0,0, 1));
-            ada.Pings.Add(new Ping(1,1, 11));
+            ada.Pings.Add(new Ping(0,0, 11));
+            ada.Pings.Add(new Ping(1,1, 12));
             var euler = new Vehicle("Euler");
             euler.Pings.Add(new Ping(0,0, 2));
             euler.Pings.Add(new Ping(1,1, 3));
@@ -71,7 +71,7 @@ namespace Warehouse
             var actual = server.GetMostTraveledSince(1, 10);
             
             Assert.AreEqual(1, actual.Length);
-            Assert.AreEqual("Euler", actual[0]);
+            Assert.AreEqual("Ada", actual[0]);
         }
         
         [Test]
@@ -87,7 +87,7 @@ namespace Warehouse
             server.Vehicles.Add(ada);
             server.Vehicles.Add(euler);
 
-            var actual = server.GetMostTraveledSince(1, 10);
+            var actual = server.GetMostTraveledSince(1, 0);
             
             Assert.AreEqual(1, actual.Length);
             Assert.AreEqual("Euler", actual[0]);
@@ -103,8 +103,8 @@ namespace Warehouse
             var euler = new Vehicle("Euler");
             euler.Pings.Add(new Ping(0,0, 2));
             euler.Pings.Add(new Ping(1,1, 3));
-            server.Vehicles.Add(ada);
             server.Vehicles.Add(euler);
+            server.Vehicles.Add(ada);
 
             var actual = server.GetMostTraveledSince(1, 10);
             

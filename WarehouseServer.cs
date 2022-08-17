@@ -67,6 +67,7 @@ namespace Warehouse
         {
             return Vehicles
                 .OrderByDescending(v => v.GetTotalDistanceSince(timestamp))
+                .ThenBy(v => v.Name)
                 .Take(maxResults)
                 .Select(v => v.Name)
                 .ToArray();
