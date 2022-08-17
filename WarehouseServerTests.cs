@@ -37,6 +37,25 @@ namespace Warehouse
         }
         
         [Test]
+        public void ShouldNotReturnDistancesIncludingTimeStamp()
+        {
+            var server = new WarehouseServer();
+            var ada = new Vehicle("Ada");
+            ada.Pings.Add(new Ping(0,0, 1));
+            ada.Pings.Add(new Ping(2,2, 10));
+            var euler = new Vehicle("Euler");
+            euler.Pings.Add(new Ping(0,0, 2));
+            euler.Pings.Add(new Ping(1,1, 3));
+            server.Vehicles.Add(ada);
+            server.Vehicles.Add(euler);
+
+            var actual = server.GetMostTraveledSince(1, 10);
+            
+            Assert.AreEqual(1, actual.Length);
+            Assert.AreEqual("Ada", actual[0]);
+        }
+        
+        [Test]
         public void ShouldNotReturnDistancesPastTimeStamp()
         {
             var server = new WarehouseServer();
