@@ -26,9 +26,9 @@ run out of time in the middle of a task.
     - GetAverageSpeed units are in dist/milliseconds
 
     *TODOs*
-    - Refactor GetTotalDistance to use an accumulator rather than having to keep appending the `totalDistance`
-    - Add tests for randomly generated numbers 
-    - Add tests for weird numbers (irrational? imaginary?)
+    - [ ] Refactor GetTotalDistance to use an accumulator rather than having to keep appending the `totalDistance`
+    - [ ] Add tests for randomly generated numbers 
+    - [ ] Add tests for weird numbers (irrational? imaginary?)
 
 2. Implement the WarehouseServer.GetMostTraveledSince method in
     WarehouseServer.cs.
@@ -42,13 +42,13 @@ run out of time in the middle of a task.
     - If distances tie, then sort by vehicle name
 
    *TODOs*
-    - Warehouse test suite has list of action items, failing tests indicate next steps
-    - Resolve index out of bounds exception
-    - Should add a test for the zero vehicle case
-    - Should add a test for the zero ping case
-    - Should add a test in case distances tie
-    - _Definitely_ can be refactored to reduce the amount of looping 😬
-    - Part of refactor should be not to access the pings directly from the Server class, that should be encapsulated into a method named `GetPingsUntil`
+    - [X] Warehouse test suite has list of action items, failing tests indicate next steps
+    - [X] Resolve index out of bounds exception
+    - [X] Should add a test for the zero vehicle case
+    - [X] Should add a test for the zero ping case
+    - [X] Should add a test in case distances tie
+    - [X] _Definitely_ can be refactored to reduce the amount of looping 😬
+    - [X] Part of refactor should be not to access the pings directly from the Server class, that should be encapsulated into a method named `GetPingsUntil`
 
 3. We want to be as proactive as possible in providing maintenance and repairs
     to our forklifts, especially those which may have been damaged. Implement

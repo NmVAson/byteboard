@@ -20,7 +20,6 @@ namespace Warehouse
             var actual = server.GetMostTraveledSince(1, 10);
             
             Assert.AreEqual(1, actual.Length);
-            
         }
 
         [Test]
@@ -92,6 +91,28 @@ namespace Warehouse
             
             Assert.AreEqual(1, actual.Length);
             Assert.AreEqual("Ada", actual[0]);
+        }
+
+        [Test]
+        public void ShouldNotThrowForZeroVehicles()
+        {
+            var server = new WarehouseServer();
+            
+            var actual = server.GetMostTraveledSince(1, 10);
+            
+            Assert.IsEmpty(actual);
+        }
+
+        [Test]
+        public void ShouldNotThrowForZeroPings()
+        {
+            var server = new WarehouseServer();
+            var ada = new Vehicle("Ada");
+            server.Vehicles.Add(ada);
+            
+            var actual = server.GetMostTraveledSince(1, 10);
+            
+            Assert.AreEqual(1, actual.Length);
         }
     }
 }
