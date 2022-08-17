@@ -22,6 +22,7 @@ run out of time in the middle of a task.
     list is sorted with the earliest ping at the start.
    
     *Assumptions*
+    - Distance is in 2D space on a coordinate plane, not lat/lon
     - Ping.Timestamp is a datetime in milliseconds
     - GetAverageSpeed units are in dist/milliseconds
 
@@ -30,7 +31,7 @@ run out of time in the middle of a task.
     - [ ] Add tests for randomly generated numbers 
     - [ ] Add tests for weird numbers (irrational? imaginary?)
 
-2. Implement the WarehouseServer.GetMostTraveledSince method in
+3. Implement the WarehouseServer.GetMostTraveledSince method in
     WarehouseServer.cs.
 
     This method returns an array of the maxResults forklifts that have
@@ -50,7 +51,7 @@ run out of time in the middle of a task.
     - [X] _Definitely_ can be refactored to reduce the amount of looping 😬
     - [X] Part of refactor should be not to access the pings directly from the Server class, that should be encapsulated into a method named `GetPingsUntil`
 
-3. We want to be as proactive as possible in providing maintenance and repairs
+4. We want to be as proactive as possible in providing maintenance and repairs
     to our forklifts, especially those which may have been damaged. Implement
     the WarehouseServer.CheckForDamage method in WarehouseServer.cs.
 
