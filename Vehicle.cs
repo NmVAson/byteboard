@@ -28,22 +28,22 @@ namespace Warehouse
         /// Determines the total distance covered by the pings.
         /// </summary>
         /// <returns>The total distance.</returns>
-        private static double GetTotalDistance(IEnumerable<Ping> pings)
+        private static double GetTotalDistance(IReadOnlyCollection<Ping> pings)
         {
-            var queuedPings = new Queue<Ping>(pings);
-            var totalDistance = 0.0;
-            while (queuedPings.TryDequeue(out var ping) && queuedPings.TryPeek(out var nextPing))
-            {
-                var x1 = ping.Position.X;
-                var y1 = ping.Position.Y;
-                var x2 = nextPing.Position.X;
-                var y2 = nextPing.Position.Y;
-                var distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+            return pings
+                .Zip(pings.Skip(1), CalculateDistance)
+                .Sum();
+        }
 
-                totalDistance += distance;
-            }
+        private static double CalculateDistance(Ping currentPing, Ping nextPing)
+        {
+            var x1 = currentPing.Position.X;
+            var y1 = currentPing.Position.Y;
+            var x2 = nextPing.Position.X;
+            var y2 = nextPing.Position.Y;
+            var distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
             
-            return totalDistance;
+            return distance;
         }
 
         /// <summary>
@@ -61,7 +61,9 @@ namespace Warehouse
         /// <returns>The total distance.</returns>
         public double GetTotalDistanceSince(long timestamp)
         {
-            var availablePings = Pings.Where(p => p.Timestamp < timestamp);
+            var availablePings = Pings
+                .Where(p => p.Timestamp < timestamp)
+                .ToList();
             
             return GetTotalDistance(availablePings);
         }

@@ -27,7 +27,7 @@ run out of time in the middle of a task.
     - GetAverageSpeed units are in dist/milliseconds
 
     *TODOs*
-    - [ ] Refactor GetTotalDistance to use an accumulator rather than having to keep appending the `totalDistance`
+    - [X] Refactor GetTotalDistance to use an accumulator rather than having to keep appending the `totalDistance`
     - [ ] Add tests for randomly generated numbers 
     - [ ] Add tests for weird numbers (irrational? imaginary?)
 
