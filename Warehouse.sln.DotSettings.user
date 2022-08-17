@@ -1,0 +1,8 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=7d0d04d6_002Da253_002D4fd3_002Da1c8_002D7bca08a634d0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShouldCalculateDistance" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EBDF335-E4CE-40E5-8252-A4559F2D0DC0::.NETCoreApp,Version=v3.1::Warehouse.VehicleTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EBDF335-E4CE-40E5-8252-A4559F2D0DC0::.NETCoreApp,Version=v3.1::Warehouse.WarehouseServerTests.ShouldNotReturnDistancesPastTimeStamp&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;NUnit3x::6EBDF335-E4CE-40E5-8252-A4559F2D0DC0::.NETCoreApp,Version=v3.1::Warehouse.WarehouseServerTests.ShouldNotReturnMoreThanNumberSpecified&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
