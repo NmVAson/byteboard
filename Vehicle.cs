@@ -59,7 +59,7 @@ namespace Warehouse
         /// Determines the total distance traveled by the vehicle before the timestamp.
         /// </summary>
         /// <returns>The total distance.</returns>
-        public double GetTotalDistance(long timestamp)
+        public double GetTotalDistanceSince(long timestamp)
         {
             var availablePings = Pings.Where(p => p.Timestamp < timestamp);
             

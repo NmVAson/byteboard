@@ -66,7 +66,7 @@ namespace Warehouse
         internal string[] GetMostTraveledSince(int maxResults, long timestamp)
         {
             return Vehicles
-                .OrderByDescending(v => v.GetTotalDistance(timestamp))
+                .OrderByDescending(v => v.GetTotalDistanceSince(timestamp))
                 .Take(maxResults)
                 .Select(v => v.Name)
                 .ToArray();
