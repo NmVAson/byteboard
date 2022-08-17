@@ -28,7 +28,7 @@ namespace Warehouse
         /// Determines the total distance covered by the pings.
         /// </summary>
         /// <returns>The total distance.</returns>
-        private static double GetTotalDistance(IReadOnlyCollection<Ping> pings)
+        private static double GetTotalDistance(IEnumerable<Ping> pings)
         {
             return pings
                 .Zip(pings.Skip(1), CalculateDistance)
@@ -62,8 +62,7 @@ namespace Warehouse
         public double GetTotalDistanceSince(long timestamp)
         {
             var availablePings = Pings
-                .Where(p => p.Timestamp <= timestamp)
-                .ToList();
+                .Where(p => p.Timestamp <= timestamp);
             
             return GetTotalDistance(availablePings);
         }
