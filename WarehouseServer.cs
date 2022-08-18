@@ -7,6 +7,7 @@ namespace Warehouse
 {
     public sealed class WarehouseServer
     {
+        private const double AggressiveAcceleration = 10.0;
         public List<Vehicle> Vehicles { get; } = new List<Vehicle>();
 
         /// <summary>
@@ -80,8 +81,20 @@ namespace Warehouse
         /// </summary>
         internal string[] CheckForDamage()
         {
-            // TODO: Implement
-            return new string[0];
+            var vehiclesWithAbnormalAcceleration = Vehicles
+                .Where(v => v.GetMaxAcceleration() >= AggressiveAcceleration);
+
+            var vehiclesColliding = Vehicles
+                .SelectMany(v => v.Pings)
+                .GroupBy(p => p)
+                .Where(g => g.Count() > 1)
+                .SelectMany(g => Vehicles.Where(v => v.Pings.Contains(g.Key)));
+
+            var vehiclesDrivingRecklessly = vehiclesWithAbnormalAcceleration
+                .Union(vehiclesColliding)
+                .Select(v => v.Name);
+                
+            return vehiclesDrivingRecklessly.ToArray();
         }
     }
 }

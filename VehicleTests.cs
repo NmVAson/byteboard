@@ -98,6 +98,32 @@ namespace Warehouse
             Assert.AreEqual(expectedDistance, Math.Round(actual, 1));
             
         }
-        
+
+        [Test]
+        public void ShouldCalculateMaxAcceleration()
+        {
+            const double expectedAcceleration = 5.7;
+            var vehicle = new Vehicle("Ada");
+            vehicle.Pings.Add(new Ping(0,0, 0));
+            vehicle.Pings.Add(new Ping(1,1, 1));
+            vehicle.Pings.Add(new Ping(3,3, 2));
+
+            var actual = vehicle.GetMaxAcceleration();
+            
+            Assert.AreEqual(expectedAcceleration, Math.Round(actual, 1));
+        }
+
+        [Test]
+        public void ShouldNotThrowMaxAccelerationIfDataIsLacking()
+        {
+            const double expectedAcceleration = 0.0;
+            var vehicle = new Vehicle("Ada");
+            vehicle.Pings.Add(new Ping(0,0, 0));
+
+            var actual = vehicle.GetMaxAcceleration();
+            
+            Assert.AreEqual(expectedAcceleration, Math.Round(actual, 1));
+            
+        }
     }
 }

@@ -133,5 +133,76 @@ namespace Warehouse
             
             Assert.AreEqual(1, actual.Length);
         }
+
+        [Test]
+        public void ShouldRetrieveForkliftsWithAggressiveAcceleration()
+        {
+            var server = new WarehouseServer();
+            var aggressive = new Vehicle("Ada");
+            aggressive.Pings.Add(new Ping(0,0, 1));
+            aggressive.Pings.Add(new Ping(10,10, 2));
+            aggressive.Pings.Add(new Ping(11,11, 3));
+            var normalVehicle = new Vehicle("Euler");
+            normalVehicle.Pings.Add(new Ping(0,0, 2));
+            normalVehicle.Pings.Add(new Ping(1,1, 3));
+            server.Vehicles.Add(aggressive);
+            server.Vehicles.Add(normalVehicle);
+
+            var actual = server.CheckForDamage();
+            
+            Assert.AreEqual(1, actual.Length);
+            Assert.AreEqual("Ada", actual[0]);
+        }
+
+        [Test]
+        public void ShouldNotThrowIfThereIsNotEnoughPings()
+        {
+            var server = new WarehouseServer();
+            var vehicle = new Vehicle("Ada");
+            vehicle.Pings.Add(new Ping(0,0, 1));
+            server.Vehicles.Add(vehicle);
+
+            var actual = server.CheckForDamage();
+            
+            Assert.AreEqual(0, actual.Length);
+        }
+
+        [Test]
+        public void ShouldRetrieveForkliftsWithAggressiveDeceleration()
+        {
+            var server = new WarehouseServer();
+            var aggressive = new Vehicle("Ada");
+            aggressive.Pings.Add(new Ping(10,10, 1));
+            aggressive.Pings.Add(new Ping(0,0, 2));
+            aggressive.Pings.Add(new Ping(1,1, 3));
+            var normalVehicle = new Vehicle("Euler");
+            normalVehicle.Pings.Add(new Ping(0,0, 1));
+            normalVehicle.Pings.Add(new Ping(1,1, 2));
+            server.Vehicles.Add(aggressive);
+            server.Vehicles.Add(normalVehicle);
+
+            var actual = server.CheckForDamage();
+            
+            Assert.AreEqual(1, actual.Length);
+            Assert.AreEqual("Ada", actual[0]);
+        }
+
+        [Test]
+        public void ShouldRetrieveForkliftsWithCollisions()
+        {
+            var server = new WarehouseServer();
+            var aggressive = new Vehicle("Ada");
+            aggressive.Pings.Add(new Ping(1,1, 3));
+            var normalVehicle = new Vehicle("Euler");
+            normalVehicle.Pings.Add(new Ping(1,1, 3));
+            server.Vehicles.Add(aggressive);
+            server.Vehicles.Add(normalVehicle);
+
+            var actual = server.CheckForDamage();
+            
+            Assert.AreEqual(2, actual.Length);
+            Assert.AreEqual("Ada", actual[0]);
+            Assert.AreEqual("Euler", actual[1]);
+        }
     }
 }

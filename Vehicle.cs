@@ -79,5 +79,24 @@ namespace Warehouse
             
             return GetTotalDistance() / totalTime;
         }
+
+        public double GetMaxAcceleration()
+        {
+            var acceleration = Pings.Zip(Pings.Skip(1), CalculateAcceleration).ToList();
+            
+            return acceleration.Any() 
+                ? acceleration.Max()
+                : 0.0;
+        }
+
+        private static double CalculateAcceleration(Ping ping, Ping nextPing)
+        {
+            const double initialVelocity = 0.0;
+            var distanceFromLastPing = CalculateDistance(ping, nextPing);
+            var timespanFromLastPing = nextPing.Timestamp - ping.Timestamp;
+
+            return 2 * (distanceFromLastPing - initialVelocity * timespanFromLastPing) /
+                   Math.Pow(timespanFromLastPing, 2);
+        }
     }
 }

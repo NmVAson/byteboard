@@ -1,3 +1,5 @@
+using System;
+
 namespace Warehouse
 {
     /// <summary>
@@ -5,6 +7,8 @@ namespace Warehouse
     /// </summary>
     public sealed class Ping
     {
+        private const double Tolerance = 0.1;
+        
         /// <summary>
         /// The position of the vehicle.
         /// </summary>
@@ -43,5 +47,22 @@ namespace Warehouse
         /// The result is positive if ping1 is earlier than ping2.</returns>
         public static long SecondsBetween(Ping ping1, Ping ping2) =>
             ping2.Timestamp - ping1.Timestamp;
+
+        public override bool Equals(object obj)
+        {
+            return obj != null
+                && obj is Ping ping
+                && Math.Abs(ping.Position.X - Position.X) < Tolerance
+                && Math.Abs(ping.Position.Y - Position.Y) < Tolerance
+                && ping.Timestamp == Timestamp;
+        }
+
+        /// <summary>Serves as the default hash function.</summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override int GetHashCode()
+        {
+            var hCode = Position.X * Position.Y * Timestamp;
+            return hCode.GetHashCode();
+        }
     }
 }

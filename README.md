@@ -31,7 +31,7 @@ run out of time in the middle of a task.
     - [ ] Add tests for randomly generated numbers 
     - [ ] Add tests for weird numbers (irrational? imaginary?)
 
-3. Implement the WarehouseServer.GetMostTraveledSince method in
+2. Implement the WarehouseServer.GetMostTraveledSince method in
     WarehouseServer.cs.
 
     This method returns an array of the maxResults forklifts that have
@@ -51,7 +51,7 @@ run out of time in the middle of a task.
     - [X] _Definitely_ can be refactored to reduce the amount of looping 😬
     - [X] Part of refactor should be not to access the pings directly from the Server class, that should be encapsulated into a method named `GetPingsUntil`
 
-4. We want to be as proactive as possible in providing maintenance and repairs
+3. We want to be as proactive as possible in providing maintenance and repairs
     to our forklifts, especially those which may have been damaged. Implement
     the WarehouseServer.CheckForDamage method in WarehouseServer.cs.
 
@@ -62,10 +62,13 @@ run out of time in the middle of a task.
     heuristics you like, but are encouraged to make sure your decisions are well
     documented and your code is appropriately decomposed.
 
-   *TODOS*
+   *TODOS*  
     Oops! Didn't have enough time for this one, so I'll attempt a quick note on how I would have solved it. 
-    - I'd start with an arbitrary definition of "aggressive", parameterized so that it's easy to change once that threshold is defined
-    - I might use the average speed method on each vehicle, and check for deviations from that average
-    - I'd likely add a `GetMaxAcceleration` method onto the Vehicle class 
-    - Use `GetMaxAcceleration` to retrieve concerning vehicles for that reason
-    - For collision points, I'd probably aggregate all of the Pings to see which ones match in X,Y, and timestamp variables, adding in a little st dev.
+    - [X] I'd start with an arbitrary definition of "aggressive", parameterized so that it's easy to change once that threshold is defined
+    - [ ] I might use the average speed method on each vehicle, and check for deviations from that average
+    - [X] I'd likely add a `GetMaxAcceleration` method onto the Vehicle class // a = 2 * (Δd - v_i * Δt) / Δt²
+    - [X] Use `GetMaxAcceleration` to retrieve concerning vehicles for that reason
+    - [X] For collision points, I'd probably aggregate all of the Pings to see which ones match in X,Y, and timestamp variables, adding in a little st dev.
+
+General Refactoring
+- [ ] Use Ping.SecondsBetween
