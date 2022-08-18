@@ -31,19 +31,8 @@ namespace Warehouse
         private static double GetTotalDistance(IEnumerable<Ping> pings)
         {
             return pings
-                .Zip(pings.Skip(1), CalculateDistance)
+                .Zip(pings.Skip(1), Ping.CalculateDistance)
                 .Sum();
-        }
-
-        private static double CalculateDistance(Ping currentPing, Ping nextPing)
-        {
-            var x1 = currentPing.Position.X;
-            var y1 = currentPing.Position.Y;
-            var x2 = nextPing.Position.X;
-            var y2 = nextPing.Position.Y;
-            var distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
-            
-            return distance;
         }
 
         /// <summary>
@@ -90,7 +79,7 @@ namespace Warehouse
         private static double CalculateAcceleration(Ping ping, Ping nextPing)
         {
             const double initialVelocity = 0.0;
-            var distanceFromLastPing = CalculateDistance(ping, nextPing);
+            var distanceFromLastPing = Ping.CalculateDistance(ping, nextPing);
             var timespanFromLastPing = Ping.SecondsBetween(ping, nextPing);
 
             return 2 * (distanceFromLastPing - initialVelocity * timespanFromLastPing) /

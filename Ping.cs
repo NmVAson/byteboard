@@ -47,6 +47,23 @@ namespace Warehouse
         /// The result is positive if ping1 is earlier than ping2.</returns>
         public static long SecondsBetween(Ping ping1, Ping ping2) =>
             ping2.Timestamp - ping1.Timestamp;
+        
+        /// <summary>
+        /// Determines the distance between two given pings.
+        /// </summary>
+        /// <param name="ping1">The first ping.</param>
+        /// <param name="ping2">The second ping.</param>
+        /// <returns>The distance between two pings.</returns>
+        public static double CalculateDistance(Ping ping1, Ping ping2)
+        {
+            var x1 = ping1.Position.X;
+            var y1 = ping1.Position.Y;
+            var x2 = ping2.Position.X;
+            var y2 = ping2.Position.Y;
+            var distance = Math.Sqrt(Math.Pow(x2 - x1, 2) + Math.Pow(y2 - y1, 2));
+            
+            return distance;
+        }
 
         public override bool Equals(object obj)
         {
