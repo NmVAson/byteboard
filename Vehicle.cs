@@ -51,7 +51,7 @@ namespace Warehouse
         public double GetTotalDistanceSince(long timestamp)
         {
             var availablePings = Pings
-                .Where(p => p.Timestamp > timestamp);
+                .Where(p => p.Timestamp >= timestamp);
             
             return GetTotalDistance(availablePings);
         }

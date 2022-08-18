@@ -7,11 +7,13 @@ namespace Warehouse
     [TestFixture]
     public class VehicleTests
     {
+        private static readonly DateTime Now = DateTime.Now;
+
         [Test]
         public void ShouldCalculateDistanceForASinglePing()
         {
             var vehicle = new Vehicle("Ada");
-            vehicle.Pings.Add(new Ping(0,0, DateTime.Now.Millisecond));
+            vehicle.Pings.Add(new Ping(0,0, Now.Second));
 
             var actual = vehicle.GetTotalDistance();
             
@@ -23,8 +25,8 @@ namespace Warehouse
         {
             const double expectedDistance = 1.4;
             var vehicle = new Vehicle("Ada");
-            vehicle.Pings.Add(new Ping(0,0, DateTime.Now.Millisecond));
-            vehicle.Pings.Add(new Ping(1,1, DateTime.Now.Add(new TimeSpan(1)).Millisecond));
+            vehicle.Pings.Add(new Ping(0,0, Now.Second));
+            vehicle.Pings.Add(new Ping(1,1, Now.AddSeconds(1).Second));
 
             var actual = vehicle.GetTotalDistance();
             
@@ -36,9 +38,9 @@ namespace Warehouse
         {
             var expectedDistance = Math.Round(1.4 + 2.8, 1);
             var vehicle = new Vehicle("Ada");
-            vehicle.Pings.Add(new Ping(0,0, DateTime.Now.Millisecond));
-            vehicle.Pings.Add(new Ping(1,1, DateTime.Now.Add(new TimeSpan(1)).Millisecond));
-            vehicle.Pings.Add(new Ping(3,3, DateTime.Now.Add(new TimeSpan(2)).Millisecond));
+            vehicle.Pings.Add(new Ping(0,0, Now.Second));
+            vehicle.Pings.Add(new Ping(1,1, Now.AddSeconds(1).Second));
+            vehicle.Pings.Add(new Ping(3,3, Now.AddSeconds(2).Second));
 
             var actual = vehicle.GetTotalDistance();
             
@@ -46,17 +48,16 @@ namespace Warehouse
         }
         
         [Test]
-        public void ShouldCalculateDistanceBetweenPointsUnderGivenTime()
+        public void ShouldCalculateDistanceSinceTimeInclusively()
         {
-            var expectedMaxTime = DateTime.Now.Millisecond + 10;
-            var expectedDistance = Math.Round(1.4 + 2.8, 1);
+            const double expectedDistance = 0.0;
             var vehicle = new Vehicle("Ada");
-            vehicle.Pings.Add(new Ping(0,0, DateTime.Now.Millisecond));
-            vehicle.Pings.Add(new Ping(1,1, DateTime.Now.Add(new TimeSpan(1)).Millisecond));
-            vehicle.Pings.Add(new Ping(3,3, DateTime.Now.Add(new TimeSpan(2)).Millisecond));
-            vehicle.Pings.Add(new Ping(3,3, DateTime.Now.Add(new TimeSpan(20)).Millisecond));
+            vehicle.Pings.Add(new Ping(0,0, Now.Second));
+            vehicle.Pings.Add(new Ping(1,1, Now.AddSeconds(1).Second));
+            vehicle.Pings.Add(new Ping(3,3, Now.AddSeconds(2).Second));
+            vehicle.Pings.Add(new Ping(3,3, Now.AddSeconds(3).Second));
 
-            var actual = vehicle.GetTotalDistance();
+            var actual = vehicle.GetTotalDistanceSince(Now.AddSeconds(2).Second);
             
             Assert.AreEqual(expectedDistance, Math.Round(actual, 1));
         }
@@ -77,8 +78,8 @@ namespace Warehouse
         {
             var expectedDistance = 101.0;
             var vehicle = new Vehicle("Ada");
-            vehicle.Pings.Add(new Ping(0,-100, DateTime.Now.Millisecond));
-            vehicle.Pings.Add(new Ping(-1.5,1, DateTime.Now.Add(new TimeSpan(1)).Millisecond));
+            vehicle.Pings.Add(new Ping(0,-100, Now.Second));
+            vehicle.Pings.Add(new Ping(-1.5,1, Now.AddSeconds(1).Second));
 
             var actual = vehicle.GetTotalDistance();
             
