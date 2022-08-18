@@ -22,7 +22,6 @@ run out of time in the middle of a task.
     list is sorted with the earliest ping at the start.
    
     *Assumptions*
-    - Distance is in 2D space on a coordinate plane, not lat/lon
     - Ping.Timestamp is a datetime in milliseconds
     - GetAverageSpeed units are in dist/milliseconds
 
@@ -30,6 +29,17 @@ run out of time in the middle of a task.
     - [X] Refactor GetTotalDistance to use an accumulator rather than having to keep appending the `totalDistance`
     - [ ] Add tests for randomly generated numbers 
     - [ ] Add tests for weird numbers (irrational? imaginary?)
+
+    *Stuff I Got Wrong*
+   - Ping.Timestamp is in seconds (from comment above Ping.SecondsBetween)
+   - Position.GetDistance exists
+   - Ping.SecondsBetween exists
+   - The extra tests in the TODOs are probably overkill
+   - Forgot to document the first assumption (distance is not in lat/lon)
+   - CalculateDistance belongs on Ping, not Vehicle (similarly to the SecondsBetween method provided) 
+   - Unnecessary copying of data into a queue, can use LINQ's Zip 
+     - since I'm zipping an array with itself, I want to zip to itself but with an offset of 1 so each element is being aggregated with it's next ping
+     - Queue might be more readable and can totally be convinced to revert
 
 2. Implement the WarehouseServer.GetMostTraveledSince method in
     WarehouseServer.cs.
@@ -51,6 +61,15 @@ run out of time in the middle of a task.
     - [X] _Definitely_ can be refactored to reduce the amount of looping 😬
     - [X] Part of refactor should be not to access the pings directly from the Server class, that should be encapsulated into a method named `GetPingsUntil`
 
+    *Stuff I Got Wrong*
+   - Tests were testing timestamp as an upper bound, not lower bound
+   - Implementation missed the "Inclusive" AC on the lower bound
+   - Index Out of Bounds 
+     - GetRange requires index and count to be a valid range, and was throwing if the list was less than the threshold
+     - Take was what I really wanted there 
+   - I don't think I needed to implement a tiebreaker (YAGNI!)
+   - Sort order was ascending, not descending
+
 3. We want to be as proactive as possible in providing maintenance and repairs
     to our forklifts, especially those which may have been damaged. Implement
     the WarehouseServer.CheckForDamage method in WarehouseServer.cs.
@@ -70,5 +89,7 @@ run out of time in the middle of a task.
     - [X] Use `GetMaxAcceleration` to retrieve concerning vehicles for that reason
     - [X] For collision points, I'd probably aggregate all of the Pings to see which ones match in X,Y, and timestamp variables, adding in a little st dev.
 
-General Refactoring
-- [X] Use Ping.SecondsBetween
+   *Stuff I Got Wrong*
+   - I implemented the acceleration per instructions, but I bet tracking velocity would have more reuse of the methods that are already there, and would be just as good to determine rough drivers
+   - I'd want someone to double check my work on calculating acceleration - I think the initial velocity might have to change for each set of points compared 
+   - Undocumented assumption that if there aren't enough pings to calculate, just return 0 as in the distance requirements. 
