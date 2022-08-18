@@ -73,9 +73,7 @@ namespace Warehouse
         /// <returns>The average speed of the vehicle.</returns>
         public double GetAverageSpeed()
         {
-            var firstPing = Pings.First().Timestamp;
-            var lastPing = Pings.Last().Timestamp;
-            var totalTime = lastPing - firstPing;
+            var totalTime = Ping.SecondsBetween(Pings.First(), Pings.Last());
             
             return GetTotalDistance() / totalTime;
         }
@@ -93,7 +91,7 @@ namespace Warehouse
         {
             const double initialVelocity = 0.0;
             var distanceFromLastPing = CalculateDistance(ping, nextPing);
-            var timespanFromLastPing = nextPing.Timestamp - ping.Timestamp;
+            var timespanFromLastPing = Ping.SecondsBetween(ping, nextPing);
 
             return 2 * (distanceFromLastPing - initialVelocity * timespanFromLastPing) /
                    Math.Pow(timespanFromLastPing, 2);

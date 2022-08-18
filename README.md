@@ -71,4 +71,4 @@ run out of time in the middle of a task.
     - [X] For collision points, I'd probably aggregate all of the Pings to see which ones match in X,Y, and timestamp variables, adding in a little st dev.
 
 General Refactoring
-- [ ] Use Ping.SecondsBetween
+- [X] Use Ping.SecondsBetween
